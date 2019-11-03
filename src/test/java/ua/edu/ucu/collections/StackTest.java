@@ -5,32 +5,34 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class StackTest {
-    private Stack stack;
+    private Stack stack1;
+    private Stack stack2;
 
     @Before
     public void init() {
-        stack = new Stack();
+        stack1 = new Stack();
         for (int i = 1; i <= 5; i++) {
-            stack.push(i);
+            stack1.push(i);
         }
+        stack2 = new Stack();
     }
 
     @Test
     public void testPeek() {
-        assertEquals(5, stack.peek());
+        assertEquals(5, stack1.peek());
     }
 
     @Test
     public void testPop() {
-        assertEquals(5, stack.pop());
-        assertEquals(4, stack.pop());
-        assertEquals(3, stack.pop());
-        assertEquals(2, stack.pop());
-        assertEquals(1, stack.pop());
+        assertEquals(5, stack1.pop());
+        assertEquals(4, stack1.pop());
+        assertEquals(3, stack1.pop());
+        assertEquals(2, stack1.pop());
+        assertEquals(1, stack1.pop());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testEmptyStackPop() {
-        stack.pop();
+        stack2.pop();
     }
 }

@@ -2,37 +2,38 @@ package ua.edu.ucu.collections;
 
 import org.junit.Test;
 import org.junit.Before;
-import ua.edu.ucu.collections.immutable.ImmutableLinkedList;
 
 import static org.junit.Assert.*;
 
 public class QueueTest {
-    private Queue queue;
+    private Queue queue1;
+    private Queue queue2;
 
     @Before
     public void init() {
-        queue = new Queue();
+        queue1 = new Queue();
         for (int i = 1; i <= 5; i++) {
-            queue.enqueue(i);
+            queue1.enqueue(i);
         }
+        queue2 = new Queue();
     }
 
     @Test
     public void testPeek() {
-        assertEquals(5, queue.peek());
+        assertEquals(1, queue1.peek());
     }
 
     @Test
     public void testDequeue() {
-        assertEquals(5, queue.dequeue());
-        assertEquals(4, queue.dequeue());
-        assertEquals(3, queue.dequeue());
-        assertEquals(2, queue.dequeue());
-        assertEquals(1, queue.dequeue());
+        assertEquals(1, queue1.dequeue());
+        assertEquals(2, queue1.dequeue());
+        assertEquals(3, queue1.dequeue());
+        assertEquals(4, queue1.dequeue());
+        assertEquals(5, queue1.dequeue());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testEmptyQueueDequeue() {
-        queue.dequeue();
+        queue2.dequeue();
     }
 }

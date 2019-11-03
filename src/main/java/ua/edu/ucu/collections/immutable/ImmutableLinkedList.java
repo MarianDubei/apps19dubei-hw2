@@ -115,6 +115,9 @@ public class ImmutableLinkedList implements ImmutableList {
     @Override
     public Object get(int index) {
         checkIndexBounds(index);
+        if (isEmpty() || index == size()) {
+            throw new IndexOutOfBoundsException();
+        }
         Node node = getNode(index);
         return node.getValue();
     }
