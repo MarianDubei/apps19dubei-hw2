@@ -107,11 +107,11 @@ public class ImmutableArrayList implements ImmutableList {
 
     @Override
     public String toString() {
-        String listString = "";
+        StringBuffer buf = new StringBuffer();
         for (int i = 0; i < listSize - 1; i++) {
-            listString += listElements[i].toString() + ", ";
+            buf.append(listElements[i].toString() + ", ");
         }
-        listString += listElements[listSize - 1].toString();
-        return listString;
+        buf.append(listElements[listSize - 1].toString());
+        return buf.toString();
     }
 }

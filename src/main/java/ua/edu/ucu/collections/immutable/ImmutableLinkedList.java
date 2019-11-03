@@ -66,12 +66,10 @@ public class ImmutableLinkedList implements ImmutableList {
     public ImmutableLinkedList(Object[] elements) {
         if (elements.length != 0) {
             setHead(new Node(elements[0]));
-            Node curNode;
-            Node prevNode = getHead();
+            Node node = getHead();
             for (int i = 1; i < elements.length; i++) {
-                curNode = new Node(elements[i]);
-                prevNode.setNext(curNode);
-                prevNode = curNode;
+                node.setNext(new Node(elements[i]));
+                node = node.getNext();
             }
         }
     }
@@ -195,14 +193,14 @@ public class ImmutableLinkedList implements ImmutableList {
         if (isEmpty()) {
             return "";
         }
-        String listString = "";
+        StringBuffer buf = new StringBuffer();
         Node node = listHead;
         while (node.getNext() != null) {
-            listString += node.getValue().toString() + ", ";
+            buf.append(node.getValue().toString() + ", ");
             node = node.getNext();
         }
-        listString += node.getValue().toString();
-        return listString;
+        buf.append(node.getValue().toString());
+        return buf.toString();
     }
 
     public ImmutableLinkedList addFirst(Object e) {
