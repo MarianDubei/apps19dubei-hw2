@@ -75,6 +75,11 @@ public class ImmutableArrayListTest {
     }
 
     @Test
+    public void testIndexOfNotFound() {
+        assertEquals(-1, list2.indexOf(10));
+    }
+
+    @Test
     public void testIsEmpty() {
         assertEquals(true, list1.isEmpty());
     }

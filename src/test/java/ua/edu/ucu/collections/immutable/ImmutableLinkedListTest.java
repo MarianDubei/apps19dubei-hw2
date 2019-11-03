@@ -83,6 +83,11 @@ public class ImmutableLinkedListTest {
     }
 
     @Test
+    public void testIndexOfNotFound() {
+        assertEquals(-1, list2.indexOf(10));
+    }
+
+    @Test
     public void testIsEmpty() {
         assertEquals(true, list1.isEmpty());
     }
@@ -95,6 +100,11 @@ public class ImmutableLinkedListTest {
     @Test
     public void testToString() {
         assertEquals("1, 3, 5, 7", list2.toString());
+    }
+
+    @Test
+    public void testToStringEmpty() {
+        assertEquals("", list1.toString());
     }
 
     @Test
