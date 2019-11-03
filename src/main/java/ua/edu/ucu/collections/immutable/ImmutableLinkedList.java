@@ -1,4 +1,4 @@
-    package ua.edu.ucu.collections.immutable;
+package ua.edu.ucu.collections.immutable;
 
 
 public class ImmutableLinkedList implements ImmutableList {
@@ -31,6 +31,28 @@ public class ImmutableLinkedList implements ImmutableList {
         return new Node(node.getValue());
     }
 
+    private Node getNode(int index) {
+        Node node = getHead();
+        int cnt = 0;
+        while (cnt < index) {
+            node = node.getNext();
+            cnt++;
+        }
+        return node;
+    }
+
+    private void checkIndexBounds(int index) {
+        if (index > size() || index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
+    private void checkIndexBoundsAuxiliary(int index) {
+        if (isEmpty() || index == size()) {
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
     private ImmutableLinkedList listCopy(int flag,
                                          int index,
                                          Object[] c,
@@ -57,8 +79,8 @@ public class ImmutableLinkedList implements ImmutableList {
             newNode = newNode.getNext();
             oldNode = oldNode.getNext();
         } else if (flag == 1) { // add
-            for (int i = 0; i < c.length; i++) {
-                newNode.setNext(new Node(c[i]));
+            for (Object element : c) {
+                newNode.setNext(new Node(element));
                 newNode = newNode.getNext();
             }
         }
@@ -98,9 +120,7 @@ public class ImmutableLinkedList implements ImmutableList {
     @Override
     public ImmutableList remove(int index) {
         checkIndexBounds(index);
-        if (isEmpty() || index == size()) {
-            throw new IndexOutOfBoundsException();
-        }
+        checkIndexBoundsAuxiliary(index);
         return listCopy(-1, index, null, null);
     }
 
@@ -113,27 +133,8 @@ public class ImmutableLinkedList implements ImmutableList {
     @Override
     public Object get(int index) {
         checkIndexBounds(index);
-        if (isEmpty() || index == size()) {
-            throw new IndexOutOfBoundsException();
-        }
-        Node node = getNode(index);
-        return node.getValue();
-    }
-
-    private Node getNode(int index) {
-        Node node = getHead();
-        int cnt = 0;
-        while (cnt < index) {
-            node = node.getNext();
-            cnt++;
-        }
-        return node;
-    }
-
-    private void checkIndexBounds(int index) {
-        if (index > size() || index < 0) {
-            throw new IndexOutOfBoundsException();
-        }
+        checkIndexBoundsAuxiliary(index);
+        return getNode(index).getValue();
     }
 
     @Override
@@ -188,21 +189,6 @@ public class ImmutableLinkedList implements ImmutableList {
         return newList;
     }
 
-    @Override
-    public String toString() {
-        if (isEmpty()) {
-            return "";
-        }
-        StringBuffer buf = new StringBuffer();
-        Node node = listHead;
-        while (node.getNext() != null) {
-            buf.append(node.getValue().toString() + ", ");
-            node = node.getNext();
-        }
-        buf.append(node.getValue().toString());
-        return buf.toString();
-    }
-
     public ImmutableLinkedList addFirst(Object e) {
         return (ImmutableLinkedList) add(0, e);
     }
@@ -225,5 +211,20 @@ public class ImmutableLinkedList implements ImmutableList {
 
     public ImmutableLinkedList removeLast() {
         return (ImmutableLinkedList) remove(size() - 1);
+    }
+
+    @Override
+    public String toString() {
+        if (isEmpty()) {
+            return "";
+        }
+        StringBuffer buf = new StringBuffer();
+        Node node = listHead;
+        while (node.getNext() != null) {
+            buf.append(node.getValue().toString() + ", ");
+            node = node.getNext();
+        }
+        buf.append(node.getValue().toString());
+        return buf.toString();
     }
 }
