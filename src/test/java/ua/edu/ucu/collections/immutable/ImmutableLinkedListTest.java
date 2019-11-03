@@ -78,6 +78,11 @@ public class ImmutableLinkedListTest {
     }
 
     @Test
+    public void testIndexOf() {
+        assertEquals(1, list2.indexOf(3));
+    }
+
+    @Test
     public void testIsEmpty() {
         assertEquals(true, list1.isEmpty());
     }

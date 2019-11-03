@@ -40,6 +40,11 @@ public class ImmutableArrayListTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
+    public void testGetOutOfBounds() {
+        list2.get(5);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
     public void testRemoveFromEmpty() {
         list1.remove(0);
     }
@@ -62,6 +67,11 @@ public class ImmutableArrayListTest {
     @Test
     public void testClear() {
         assertArrayEquals(new Object[]{}, list2.clear().toArray());
+    }
+
+    @Test
+    public void testIndexOf() {
+        assertEquals(1, list2.indexOf(3));
     }
 
     @Test
