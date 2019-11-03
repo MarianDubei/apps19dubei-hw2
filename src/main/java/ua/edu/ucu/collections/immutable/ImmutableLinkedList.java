@@ -8,6 +8,17 @@ public class ImmutableLinkedList implements ImmutableList {
         listHead = null;
     }
 
+    public ImmutableLinkedList(Object[] elements) {
+        if (elements.length != 0) {
+            setHead(new Node(elements[0]));
+            Node node = getHead();
+            for (int i = 1; i < elements.length; i++) {
+                node.setNext(new Node(elements[i]));
+                node = node.getNext();
+            }
+        }
+    }
+
     private void setHead(Node node) {
         listHead = node;
     }
@@ -46,7 +57,7 @@ public class ImmutableLinkedList implements ImmutableList {
             newNode = newNode.getNext();
             oldNode = oldNode.getNext();
         } else if (flag == 1) { // add
-            for ( int i = 0; i < c.length; i++ ) {
+            for (int i = 0; i < c.length; i++) {
                 newNode.setNext(new Node(c[i]));
                 newNode = newNode.getNext();
             }
@@ -61,17 +72,6 @@ public class ImmutableLinkedList implements ImmutableList {
         // removing null head
         newLinkedList.setHead(newLinkedList.getHead().getNext());
         return newLinkedList;
-    }
-
-    public ImmutableLinkedList(Object[] elements) {
-        if (elements.length != 0) {
-            setHead(new Node(elements[0]));
-            Node node = getHead();
-            for (int i = 1; i < elements.length; i++) {
-                node.setNext(new Node(elements[i]));
-                node = node.getNext();
-            }
-        }
     }
 
     @Override
