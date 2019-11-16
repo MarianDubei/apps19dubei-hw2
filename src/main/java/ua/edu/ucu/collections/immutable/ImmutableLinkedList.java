@@ -97,35 +97,35 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList add(Object e) {
+    public ImmutableLinkedList add(Object e) {
         return add(size(), e);
     }
 
     @Override
-    public ImmutableList add(int index, Object e) {
+    public ImmutableLinkedList add(int index, Object e) {
         return addAll(index, new Object[]{e});
     }
 
     @Override
-    public ImmutableList addAll(Object[] c) {
+    public ImmutableLinkedList addAll(Object[] c) {
         return addAll(size(), c);
     }
 
     @Override
-    public ImmutableList addAll(int index, Object[] c) {
+    public ImmutableLinkedList addAll(int index, Object[] c) {
         checkIndexBounds(index);
         return listCopy(1, index, c, null);
     }
 
     @Override
-    public ImmutableList remove(int index) {
+    public ImmutableLinkedList remove(int index) {
         checkIndexBounds(index);
         checkIndexBoundsAuxiliary(index);
         return listCopy(-1, index, null, null);
     }
 
     @Override
-    public ImmutableList set(int index, Object e) {
+    public ImmutableLinkedList set(int index, Object e) {
         checkIndexBounds(index);
         return listCopy(0, index, null, e);
     }
@@ -142,7 +142,7 @@ public class ImmutableLinkedList implements ImmutableList {
         Node node = getHead();
         int index = 0;
         while (node != null) {
-            if (node.getValue() == e) {
+            if (node.getValue().equals(e)) {
                 return index;
             } else {
                 index++;
@@ -167,7 +167,7 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     @Override
-    public ImmutableList clear() {
+    public ImmutableLinkedList clear() {
         return new ImmutableLinkedList();
     }
 
