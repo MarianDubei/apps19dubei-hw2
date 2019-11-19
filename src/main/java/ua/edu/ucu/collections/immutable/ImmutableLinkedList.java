@@ -16,7 +16,7 @@ public class ImmutableLinkedList implements ImmutableList {
                 node.setNext(new Node(elements[i]));
                 node = node.getNext();
             }
-        }
+        } else { listHead = null; }
     }
 
     private void setHead(Node node) {
@@ -57,27 +57,28 @@ public class ImmutableLinkedList implements ImmutableList {
                                          int index,
                                          Object[] c,
                                          Object e) {
+        checkIndexBounds(index);
         ImmutableLinkedList newLinkedList = new ImmutableLinkedList();
-        Node oldNode = getHead();
+        Node originNode = getHead();
         newLinkedList.setHead(new Node(null));
         Node newNode = newLinkedList.getHead();
 
         // copying all elements before the index
         int cnt = 0;
         while (cnt < index) {
-            newNode.setNext(copyNode(oldNode));
+            newNode.setNext(copyNode(originNode));
             newNode = newNode.getNext();
-            oldNode = oldNode.getNext();
+            originNode = originNode.getNext();
             cnt++;
         }
 
         // manipulation with elements on index according to the flag
         if (flag == -1) { // remove
-            oldNode = oldNode.getNext();
+            originNode = originNode.getNext();
         } else if (flag == 0) { // set
             newNode.setNext(new Node(e));
             newNode = newNode.getNext();
-            oldNode = oldNode.getNext();
+            originNode = originNode.getNext();
         } else if (flag == 1) { // add
             for (Object element : c) {
                 newNode.setNext(new Node(element));
@@ -86,10 +87,10 @@ public class ImmutableLinkedList implements ImmutableList {
         }
 
         // copying all elements after the index
-        while (oldNode != null) {
-            newNode.setNext(copyNode(oldNode));
+        while (originNode != null) {
+            newNode.setNext(copyNode(originNode));
             newNode = newNode.getNext();
-            oldNode = oldNode.getNext();
+            originNode = originNode.getNext();
         }
         // removing null head
         newLinkedList.setHead(newLinkedList.getHead().getNext());
@@ -113,20 +114,17 @@ public class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public ImmutableLinkedList addAll(int index, Object[] c) {
-        checkIndexBounds(index);
         return listCopy(1, index, c, null);
     }
 
     @Override
     public ImmutableLinkedList remove(int index) {
-        checkIndexBounds(index);
         checkIndexBoundsAuxiliary(index);
         return listCopy(-1, index, null, null);
     }
 
     @Override
     public ImmutableLinkedList set(int index, Object e) {
-        checkIndexBounds(index);
         return listCopy(0, index, null, e);
     }
 
@@ -190,11 +188,11 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     public ImmutableLinkedList addFirst(Object e) {
-        return (ImmutableLinkedList) add(0, e);
+        return add(0, e);
     }
 
     public ImmutableLinkedList addLast(Object e) {
-        return (ImmutableLinkedList) add(e);
+        return add(e);
     }
 
     public Object getFirst() {
@@ -206,11 +204,11 @@ public class ImmutableLinkedList implements ImmutableList {
     }
 
     public ImmutableLinkedList removeFirst() {
-        return (ImmutableLinkedList) remove(0);
+        return remove(0);
     }
 
     public ImmutableLinkedList removeLast() {
-        return (ImmutableLinkedList) remove(size() - 1);
+        return remove(size() - 1);
     }
 
     @Override
@@ -218,10 +216,10 @@ public class ImmutableLinkedList implements ImmutableList {
         if (isEmpty()) {
             return "";
         }
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         Node node = listHead;
         while (node.getNext() != null) {
-            buf.append(node.getValue().toString() + ", ");
+            buf.append(node.getValue().toString()).append(", ");
             node = node.getNext();
         }
         buf.append(node.getValue().toString());

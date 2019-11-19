@@ -22,6 +22,12 @@ public class ImmutableArrayList implements ImmutableList {
         }
     }
 
+    private void checkIndexBoundsAuxiliary(int index) {
+        if (isEmpty() || index == size()) {
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
     @Override
     public ImmutableArrayList add(Object e) {
         return add(listSize, e);
@@ -39,14 +45,16 @@ public class ImmutableArrayList implements ImmutableList {
 
     @Override
     public ImmutableArrayList addAll(int index, Object[] c) {
-        checkIndexBounds(index);
-        int cSize = c.length;
-        Object[] newList = new Object[listSize + cSize];
-        System.arraycopy(listElements, 0, newList, 0, index);
-        System.arraycopy(c, 0, newList, index, cSize);
-        System.arraycopy(listElements, index, newList, index + cSize,
-                listSize - index);
-        return new ImmutableArrayList(newList);
+        if (c != null) {
+            checkIndexBounds(index);
+            int cSize = c.length;
+            Object[] newList = new Object[listSize + cSize];
+            System.arraycopy(listElements, 0, newList, 0, index);
+            System.arraycopy(c, 0, newList, index, cSize);
+            System.arraycopy(listElements, index, newList, index + cSize,
+                    listSize - index);
+            return new ImmutableArrayList(newList);
+        } else { return new ImmutableArrayList(listElements); }
     }
 
     @Override
@@ -58,9 +66,8 @@ public class ImmutableArrayList implements ImmutableList {
     @Override
     public ImmutableArrayList remove(int index) {
         checkIndexBounds(index);
-        if (isEmpty()) {
-            throw new IndexOutOfBoundsException();
-        }
+        checkIndexBoundsAuxiliary(index);
+        if (isEmpty()) { throw new IndexOutOfBoundsException(); }
         Object[] newList = new Object[listSize - 1];
         System.arraycopy(listElements, 0, newList, 0, index);
         System.arraycopy(listElements, index + 1, newList, index,
@@ -108,9 +115,9 @@ public class ImmutableArrayList implements ImmutableList {
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (int i = 0; i < listSize - 1; i++) {
-            buf.append(listElements[i].toString() + ", ");
+            buf.append(listElements[i].toString()).append(", ");
         }
         buf.append(listElements[listSize - 1].toString());
         return buf.toString();
