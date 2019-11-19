@@ -53,6 +53,12 @@ public final class ImmutableLinkedList implements ImmutableList {
         }
     }
 
+    private void isNull(Object element) {
+        if (element == null) {
+            throw new NullPointerException();
+        }
+    }
+
     private ImmutableLinkedList listCopy(int flag,
                                          int index,
                                          Object[] c,
@@ -114,6 +120,7 @@ public final class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public ImmutableLinkedList addAll(int index, Object[] c) {
+        isNull(c);
         return listCopy(1, index, c, null);
     }
 
@@ -125,6 +132,7 @@ public final class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public ImmutableLinkedList set(int index, Object e) {
+        isNull(e);
         return listCopy(0, index, null, e);
     }
 
@@ -137,6 +145,7 @@ public final class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public int indexOf(Object e) {
+        isNull(c);
         Node node = getHead();
         int index = 0;
         while (node != null) {

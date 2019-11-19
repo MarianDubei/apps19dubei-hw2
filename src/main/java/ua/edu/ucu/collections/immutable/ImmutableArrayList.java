@@ -28,6 +28,12 @@ public final class ImmutableArrayList implements ImmutableList {
         }
     }
 
+    private void isNull(Object element) {
+        if (element == null) {
+            throw new NullPointerException();
+        }
+    }
+
     @Override
     public ImmutableArrayList add(Object e) {
         return add(listSize, e);
@@ -45,16 +51,15 @@ public final class ImmutableArrayList implements ImmutableList {
 
     @Override
     public ImmutableArrayList addAll(int index, Object[] c) {
-        if (c != null) {
-            checkIndexBounds(index);
-            int cSize = c.length;
-            Object[] newList = new Object[listSize + cSize];
-            System.arraycopy(listElements, 0, newList, 0, index);
-            System.arraycopy(c, 0, newList, index, cSize);
-            System.arraycopy(listElements, index, newList, index + cSize,
-                    listSize - index);
-            return new ImmutableArrayList(newList);
-        } else { return new ImmutableArrayList(listElements); }
+        isNull(c);
+        checkIndexBounds(index);
+        int cSize = c.length;
+        Object[] newList = new Object[listSize + cSize];
+        System.arraycopy(listElements, 0, newList, 0, index);
+        System.arraycopy(c, 0, newList, index, cSize);
+        System.arraycopy(listElements, index, newList, index + cSize,
+                listSize - index);
+        return new ImmutableArrayList(newList);
     }
 
     @Override
@@ -77,6 +82,7 @@ public final class ImmutableArrayList implements ImmutableList {
 
     @Override
     public ImmutableArrayList set(int index, Object e) {
+        isNull(e);
         checkIndexBounds(index);
         Object[] newList = toArray();
         newList[index] = e;
@@ -85,6 +91,7 @@ public final class ImmutableArrayList implements ImmutableList {
 
     @Override
     public int indexOf(Object e) {
+        isNull(e);
         for (int i = 0; i < listSize; i++) {
             if (listElements[i].equals(e)) {
                 return i;
