@@ -2,9 +2,9 @@ package ua.edu.ucu.collections.immutable;
 
 import java.util.Arrays;
 
-public class ImmutableArrayList implements ImmutableList {
-    private final int listSize;
-    private final Object[] listElements;
+public final class ImmutableArrayList implements ImmutableList {
+    private int listSize;
+    private Object[] listElements;
 
     public ImmutableArrayList() {
         listSize = 0;
