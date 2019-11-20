@@ -145,7 +145,7 @@ public final class ImmutableLinkedList implements ImmutableList {
 
     @Override
     public int indexOf(Object e) {
-        isNull(c);
+        isNull(e);
         Node node = getHead();
         int index = 0;
         while (node != null) {
